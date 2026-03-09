@@ -1,0 +1,11 @@
+{
+  "admin": {
+    "username": "admin",
+    "password": ""
+  },
+  "game": {
+    "maxPlayers": 10,
+    "totalQuarters": 4,
+    "startingCash": 1000000
+  }
+}

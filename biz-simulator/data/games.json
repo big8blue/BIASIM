@@ -1,0 +1,167 @@
+[
+  [
+    "1XUGM4",
+    {
+      "id": "1XUGM4",
+      "roomCode": "1XUGM4",
+      "status": "ended",
+      "quarter": 4,
+      "maxPlayers": 10,
+      "totalQuarters": 4,
+      "startingCash": 1000000,
+      "players": [
+        {
+          "id": "Ej8Xn745UT0avrUmAAAH",
+          "name": "BOT",
+          "companyName": "BOT PVT LTD",
+          "cash": 5688948.48696588,
+          "revenue": 1354351.399285492,
+          "profit": 1229351.399285492,
+          "marketShare": 66.79574056147143,
+          "submitted": true,
+          "decisions": {
+            "price": 50,
+            "marketingBudget": 50000,
+            "researchBudget": 25000,
+            "qualityInvestment": 30000,
+            "distribution": 1
+          },
+          "history": [
+            {
+              "quarter": 1,
+              "revenue": 1214632.3008453094,
+              "profit": 1089632.3008453094,
+              "marketShare": 53.85982395383145,
+              "decisions": {
+                "price": 50,
+                "marketingBudget": 50000,
+                "researchBudget": 25000,
+                "qualityInvestment": 30000,
+                "distribution": 1
+              }
+            },
+            {
+              "quarter": 2,
+              "revenue": 1281228.3741562974,
+              "profit": 1156228.3741562974,
+              "marketShare": 66.79574056147143,
+              "decisions": {
+                "price": 50,
+                "marketingBudget": 50000,
+                "researchBudget": 25000,
+                "qualityInvestment": 30000,
+                "distribution": 1
+              }
+            },
+            {
+              "quarter": 3,
+              "revenue": 1338736.4126787814,
+              "profit": 1213736.4126787814,
+              "marketShare": 66.79574056147143,
+              "decisions": {
+                "price": 50,
+                "marketingBudget": 50000,
+                "researchBudget": 25000,
+                "qualityInvestment": 30000,
+                "distribution": 1
+              }
+            },
+            {
+              "quarter": 4,
+              "revenue": 1354351.399285492,
+              "profit": 1229351.399285492,
+              "marketShare": 66.79574056147143,
+              "decisions": {
+                "price": 50,
+                "marketingBudget": 50000,
+                "researchBudget": 25000,
+                "qualityInvestment": 30000,
+                "distribution": 1
+              }
+            }
+          ],
+          "demand": 27087.02798570984
+        },
+        {
+          "id": "dToHUGuguBHHxLWnAAAB",
+          "name": "JACKSON",
+          "companyName": "JACKSON PVT LTD",
+          "cash": 6889387.647139891,
+          "revenue": 1790845.1154784018,
+          "profit": 1540845.1154784018,
+          "marketShare": 33.20425943852856,
+          "submitted": true,
+          "decisions": {
+            "price": 133,
+            "marketingBudget": 40000,
+            "researchBudget": 20000,
+            "qualityInvestment": 150000,
+            "distribution": 2
+          },
+          "history": [
+            {
+              "quarter": 1,
+              "revenue": 1519189.6733823738,
+              "profit": 1384189.6733823738,
+              "marketShare": 46.140176046168534,
+              "decisions": {
+                "price": 73,
+                "marketingBudget": 40000,
+                "researchBudget": 20000,
+                "qualityInvestment": 35000,
+                "distribution": 2
+              }
+            },
+            {
+              "quarter": 2,
+              "revenue": 1694155.2811778593,
+              "profit": 1444155.2811778593,
+              "marketShare": 33.20425943852856,
+              "decisions": {
+                "price": 133,
+                "marketingBudget": 40000,
+                "researchBudget": 20000,
+                "qualityInvestment": 150000,
+                "distribution": 2
+              }
+            },
+            {
+              "quarter": 3,
+              "revenue": 1770197.577101256,
+              "profit": 1520197.577101256,
+              "marketShare": 33.20425943852856,
+              "decisions": {
+                "price": 133,
+                "marketingBudget": 40000,
+                "researchBudget": 20000,
+                "qualityInvestment": 150000,
+                "distribution": 2
+              }
+            },
+            {
+              "quarter": 4,
+              "revenue": 1790845.1154784018,
+              "profit": 1540845.1154784018,
+              "marketShare": 33.20425943852856,
+              "decisions": {
+                "price": 133,
+                "marketingBudget": 40000,
+                "researchBudget": 20000,
+                "qualityInvestment": 150000,
+                "distribution": 2
+              }
+            }
+          ],
+          "demand": 13465.00086825866
+        }
+      ],
+      "marketConditions": {
+        "baseDemand": 13928.293406862005,
+        "competition": 3,
+        "economicFactor": 1.0065274047198371,
+        "trend": 1
+      },
+      "createdAt": "2026-03-09T04:10:17.343Z"
+    }
+  ]
+]
