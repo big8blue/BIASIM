@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BizSim Admin</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.1/jspdf.plugin.autotable.min.js"></script>
+    <style>
+        :root {
+            --primary: #1e3a5f;
+            --secondary: #3d7ea6;
+            --accent: #f0b429;
+            --success: #28a745;
+            --danger: #dc3545;
+            --dark: #1a1a2e;
+            --light: #f8f9fa;
+            --card-bg: #16213e;
+            --bg: #0f0f23;
+            --text: #f8f9fa;
+            --text-muted: #888;
+            --border: #2a2a4a;
+        }
+
+        .light-mode {
+            --primary: #3498db;
+            --secondary: #2980b9;
+            --dark: #ecf0f1;
+            --light: #2c3e50;
+            --card-bg: #ffffff;
+            --bg: #f5f6fa;
+            --text: #2c3e50;
+            --text-muted: #666;
+            --border: #ddd;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, sans-serif; }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .container { max-width: 1400px; margin: 0 auto; padding: 15px; }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 2px solid var(--accent);
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        h1 { color: var(--accent); font-size: 1.8rem; }
+
+        .header-right { display: flex; align-items: center; gap: 15px; }
+
+        .admin-badge {
+            background: var(--accent);
+            color: #1a1a2e;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        .theme-toggle {
+            padding: 8px 16px;
+            background: var(--card-bg);
+            border: 2px solid var(--border);
+            border-radius: 20px;
+            color: var(--text);
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .login-screen {
+            max-width: 400px;
+            margin: 80px auto;
+            background: var(--card-bg);
+            padding: 35px;
+            border-radius: 15px;
+        }
+
+        .login-screen h2 { color: var(--accent); margin-bottom: 20px; text-align: center; }
+        .login-screen input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .btn:hover { transform: scale(1.02); }
+        .btn-success { background: var(--success); color: white; }
+        .btn-warning { background: var(--accent); color: #1a1a2e; }
+        .btn-danger { background: var(--danger); color: white; }
+        .btn-primary { background: var(--secondary); color: white; }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .btn-full { width: 100%; }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+
+        .stat-card .label { color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase; }
+        .stat-card .value { font-size: 1.8rem; font-weight: bold; color: var(--accent); margin-top: 8px; }
+
+        .section {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border);
+        }
+
+        .section h2 { color: var(--accent); margin-bottom: 15px; font-size: 1.2rem; }
+
+        .room-card {
+            background: var(--bg);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 12px;
+        }
+
+        .room-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .room-code { font-size: 1.5rem; font-weight: bold; color: var(--accent); letter-spacing: 2px; }
+
+        .room-params {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-left: 10px;
+        }
+
+        .status-badge {
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status.waiting { background: #3498db; }
+        .status.playing { background: #27ae60; }
+        .status.ready { background: #f39c12; }
+        .status.ended { background: #e74c3c; }
+
+        .player-tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
+
+        .player-tag {
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+
+        .player-tag.submitted { background: var(--success); }
+        .player-tag.pending { background: var(--danger); }
+
+        .action-buttons { display: flex; gap: 8px; flex-wrap: wrap; }
+
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 10px 8px; text-align: left; border-bottom: 1px solid var(--border); font-size: 0.9rem; }
+        th { background: var(--bg); color: var(--accent); font-size: 0.8rem; text-transform: uppercase; }
+
+        .notification {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            padding: 12px 20px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            z-index: 1000;
+        }
+
+        .notification.success { background: var(--success); }
+        .notification.error { background: var(--danger); }
+        .notification.info { background: var(--secondary); }
+
+        .empty { text-align: center; color: var(--text-muted); padding: 30px; }
+
+        .settings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .settings-group {
+            background: var(--bg);
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .settings-group label { display: block; margin-bottom: 8px; color: var(--accent); font-weight: 600; }
+        .settings-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: var(--card-bg);
+            color: var(--text);
+        }
+
+        .tab-nav { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+        .tab-btn {
+            padding: 12px 24px;
+            background: var(--card-bg);
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .tab-btn.active { background: var(--accent); color: #1a1a2e; border-color: var(--accent); }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        .report-card {
+            background: var(--card-bg);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .report-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 10px;}
+        .report-winner { color: var(--accent); font-weight: 700; font-size: 1.05rem; }
+
+        .history-summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 10px; }
+        .summary-item { text-align: center; padding: 10px; background: var(--card-bg); border-radius: 6px; }
+        .summary-label { font-size: 0.75rem; color: var(--text-muted); }
+        .summary-value { font-size: 1.1rem; font-weight: bold; color: var(--accent); }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.active { display: flex; }
+
+        .modal-content {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 450px;
+            width: 90%;
+        }
+
+        .modal-content h2 { color: var(--accent); margin-bottom: 20px; }
+
+        .modal-actions { display: flex; gap: 10px; margin-top: 20px; }
+        .modal-actions .btn { flex: 1; }
+
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 8px; color: var(--accent); font-weight: 600; }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid var(--border);
+            border-radius: 6px;
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .header-right { flex-wrap: wrap; }
+            .room-header { flex-direction: column; align-items: flex-start; }
+            .history-summary { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>BizSim Admin</h1>
+            <div class="header-right">
+                <span class="admin-badge" id="adminBadge" style="display: none;">ADMIN</span>
+                <button class="theme-toggle" onclick="toggleTheme()">☀️ Light</button>
+            </div>
+        </header>
+
+        <!-- LOGIN -->
+        <div id="loginScreen" class="login-screen">
+            <h2>🔐 Admin Login</h2>
+            <input type="text" id="adminUser" placeholder="Username">
+            <input type="password" id="adminPass" placeholder="Password">
+            <button class="btn btn-primary btn-full" onclick="doLogin()">Login</button>
+            <p style="color: var(--text-muted); margin-top: 15px; font-size: 0.85rem; text-align: center;">Credentials: config/settings.json</p>
+        </div>
+
+        <!-- DASHBOARD -->
+        <div id="dashboard" style="display: none;">
+            <div class="tab-nav">
+                <button class="tab-btn active" onclick="switchTab('rooms')">Rooms</button>
+                <button class="tab-btn" onclick="switchTab('reports')">Reports</button>
+            </div>
+
+            <!-- ROOMS TAB -->
+            <div id="roomsTab" class="tab-content active">
+                <button class="btn btn-warning" onclick="showCreateRoomModal()">+ Create New Room</button>
+
+                <div class="stats-grid" style="margin-top: 20px;">
+                    <div class="stat-card">
+                        <div class="label">Active Rooms</div>
+                        <div class="value" id="statActive">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="label">Waiting</div>
+                        <div class="value" id="statWaiting">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="label">Playing</div>
+                        <div class="value" id="statPlaying">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="label">Total Games</div>
+                        <div class="value" id="statHistory">0</div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2>Active Rooms</h2>
+                    <div id="roomsList">
+                        <div class="empty">Loading...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- REPORTS TAB -->
+            <div id="reportsTab" class="tab-content">
+                <div class="section">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <h2>Game History & Reports</h2>
+                        <button class="btn btn-primary" onclick="exportAllGamesReport()">📊 Generate All Games Report</button>
+                    </div>
+                    <div id="reportsList">
+                        <div class="empty">No games played yet</div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2>Analytics Summary</h2>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="label">Total Games Played</div>
+                            <div class="value" id="analyticsTotal">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="label">Total Players</div>
+                            <div class="value" id="analyticsPlayers">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="label">Avg Winner Profit</div>
+                            <div class="value" id="analyticsAvgWin">$0</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="label">Top Winner</div>
+                            <div class="value" id="analyticsTopWinner" style="font-size: 1rem;">-</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CREATE ROOM MODAL -->
+    <div class="modal" id="createRoomModal">
+        <div class="modal-content">
+            <h2>Create New Room</h2>
+            <div class="form-group">
+                <label>Max Players</label>
+                <input type="number" id="roomMaxPlayers" min="2" max="20" value="10">
+            </div>
+            <div class="form-group">
+                <label>Total Quarters</label>
+                <input type="number" id="roomQuarters" min="4" max="24" value="12">
+                <small style="color:var(--text-muted);">Minimum enforced by server: 4 quarters</small>
+            </div>
+            <div class="form-group">
+                <label>Starting Cash ($)</label>
+                <input type="number" id="roomCash" min="100000" step="100000" value="1000000">
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-primary" onclick="closeModal()">Cancel</button>
+                <button class="btn btn-success" onclick="createRoom()">Create Room</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const { jsPDF } = window.jspdf;
+        const socket = io();
+        let isAdmin = false;
+        let currentConfig = null;
+        let gameHistory = [];
+
+        function toggleTheme() {
+            document.body.classList.toggle('light-mode');
+            const btn = document.querySelector('.theme-toggle');
+            btn.textContent = document.body.classList.contains('light-mode') ? '🌙 Dark' : '☀️ Light';
+            ensureLightModeContrast();
+        }
+
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            event.target.classList.add('active');
+            document.getElementById(tab + 'Tab').classList.add('active');
+        }
+
+        function showCreateRoomModal() {
+            document.getElementById('createRoomModal').classList.add('active');
+            document.getElementById('roomMaxPlayers').value = currentConfig?.game?.maxPlayers || 10;
+            document.getElementById('roomQuarters').value = currentConfig?.game?.totalQuarters || 12;
+            document.getElementById('roomCash').value = currentConfig?.game?.startingCash || 1000000;
+        }
+
+        function closeModal() {
+            document.getElementById('createRoomModal').classList.remove('active');
+        }
+
+        function notify(msg, type = 'info') {
+            const n = document.createElement('div');
+            n.className = `notification ${type}`;
+            n.textContent = msg;
+            document.body.appendChild(n);
+            setTimeout(() => n.remove(), 3000);
+        }
+
+        function formatMoney(v) { return '$' + Math.round(v).toLocaleString(); }
+
+        function doLogin() {
+            const user = document.getElementById('adminUser').value;
+            const pass = document.getElementById('adminPass').value;
+            
+            socket.emit('adminLogin', user, pass, (res) => {
+                if (res.success) {
+                    isAdmin = true;
+                    document.getElementById('loginScreen').style.display = 'none';
+                    document.getElementById('dashboard').style.display = 'block';
+                    document.getElementById('adminBadge').style.display = 'inline';
+                    notify('Logged in!', 'success');
+                } else {
+                    notify('Invalid credentials', 'error');
+                }
+            });
+        }
+
+        document.getElementById('adminPass').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') doLogin();
+        });
+
+        socket.on('config', (cfg) => {
+            currentConfig = cfg;
+            // Safely update optional config input fields if present
+            const setIf = (id, value) => { const el = document.getElementById(id); if (el) el.value = value; };
+            setIf('cfgUsername', cfg.admin?.username || '');
+            setIf('cfgPassword', '');
+            setIf('cfgMaxPlayers', cfg.game?.maxPlayers || 10);
+            setIf('cfgQuarters', cfg.game?.totalQuarters || 12);
+            setIf('cfgCash', cfg.game?.startingCash || 1000000);
+        });
+
+        // Improve light-mode readability adjustments
+        function ensureLightModeContrast() {
+            if (document.body.classList.contains('light-mode')) {
+                document.documentElement.style.setProperty('--card-bg', '#ffffff');
+                document.documentElement.style.setProperty('--bg', '#f5f6fa');
+                document.documentElement.style.setProperty('--text', '#222');
+                document.documentElement.style.setProperty('--text-muted', '#666');
+                document.documentElement.style.setProperty('--border', '#e0e0e0');
+            } else {
+                // reset to dark defaults
+                document.documentElement.style.setProperty('--card-bg', '#16213e');
+                document.documentElement.style.setProperty('--bg', '#0f0f23');
+                document.documentElement.style.setProperty('--text', '#f8f9fa');
+                document.documentElement.style.setProperty('--text-muted', '#888');
+                document.documentElement.style.setProperty('--border', '#2a2a4a');
+            }
+        }
+        // run once at load
+        ensureLightModeContrast();
+
+        function saveConfig() {
+            if (!isAdmin) return;
+            
+            const newConfig = {
+                admin: {
+                    username: (document.getElementById('cfgUsername') && document.getElementById('cfgUsername').value) || (currentConfig?.admin?.username || ''),
+                    password: (document.getElementById('cfgPassword') && document.getElementById('cfgPassword').value) || (currentConfig?.admin?.password || '')
+                },
+                game: {
+                    maxPlayers: parseInt((document.getElementById('cfgMaxPlayers') && document.getElementById('cfgMaxPlayers').value) || (currentConfig?.game?.maxPlayers || 10)),
+                    totalQuarters: parseInt((document.getElementById('cfgQuarters') && document.getElementById('cfgQuarters').value) || (currentConfig?.game?.totalQuarters || 12)),
+                    startingCash: parseInt((document.getElementById('cfgCash') && document.getElementById('cfgCash').value) || (currentConfig?.game?.startingCash || 1000000))
+                }
+            };
+            
+            socket.emit('adminUpdateConfig', newConfig, (res) => {
+                if (res.success) {
+                    // update local config copy so UI reflects changes
+                    currentConfig = res.config || newConfig;
+                    notify('Settings saved!', 'success');
+                } else {
+                    notify('Failed to save', 'error');
+                }
+            });
+        }
+
+        socket.on('roomsUpdated', (rooms) => {
+            renderRooms(rooms);
+            updateStats(rooms);
+        });
+
+        socket.on('historyUpdated', (history) => {
+            gameHistory = history;
+            renderReports(history);
+        });
+
+        function createRoom() {
+            const params = {
+                maxPlayers: parseInt(document.getElementById('roomMaxPlayers').value),
+                totalQuarters: parseInt(document.getElementById('roomQuarters').value),
+                startingCash: parseInt(document.getElementById('roomCash').value)
+            };
+            
+            socket.emit('adminCreateRoom', params, (res) => {
+                if (res.success) {
+                    notify('Room created: ' + res.roomCode, 'success');
+                    closeModal();
+                } else {
+                    notify(res.error || 'Failed', 'error');
+                }
+            });
+        }
+
+        function startGame(roomCode) {
+            socket.emit('adminStartGame', roomCode, (res) => {
+                if (res.success) {
+                    notify('Game started!', 'success');
+                } else {
+                    notify(res.error || 'Failed', 'error');
+                }
+            });
+        }
+
+        function nextRound(roomCode) {
+            socket.emit('adminProceedRound', roomCode, (res) => {
+                if (res.success) {
+                    if (res.ended) {
+                        notify('Game ended!', 'success');
+                        // Fetch updated history
+                        fetch('/api/admin/history').then(r => r.json()).then(h => {
+                            gameHistory = h;
+                            renderReports(h);
+                        });
+                    } else {
+                        notify('Quarter ' + res.quarter + '!', 'success');
+                    }
+                } else {
+                    notify(res.error || 'Failed', 'error');
+                }
+            });
+        }
+
+        function deleteRoom(roomCode) {
+            if (!confirm('Delete this room?')) return;
+            socket.emit('adminDeleteRoom', roomCode, (res) => {
+                if (res.success) notify('Room deleted', 'success');
+                else notify(res.error || 'Failed', 'error');
+            });
+        }
+
+        function kickPlayer(roomCode, playerId) {
+            if (!confirm('Kick this player?')) return;
+            socket.emit('adminKickPlayer', roomCode, playerId, (res) => {
+                if (res.success) notify('Player kicked', 'success');
+                else notify(res.error || 'Failed', 'error');
+            });
+        }
+
+        function updateStats(rooms) {
+            const waiting = rooms.filter(r => r.status === 'waiting').length;
+            const playing = rooms.filter(r => r.status === 'playing').length;
+            document.getElementById('statActive').textContent = rooms.length;
+            document.getElementById('statWaiting').textContent = waiting;
+            document.getElementById('statPlaying').textContent = playing;
+        }
+
+        function renderRooms(rooms) {
+            const list = document.getElementById('roomsList');
+            
+            if (!rooms.length) {
+                list.innerHTML = '<div class="empty">No active rooms. Click "Create New Room" to start.</div>';
+                return;
+            }
+            
+            list.innerHTML = rooms.map(r => {
+                const allSubmitted = r.playerDetails?.every(p => p.submitted);
+                const statusClass = r.status === 'waiting' ? 'waiting' : 
+                                   (r.status === 'playing' && allSubmitted ? 'ready' : 
+                                   (r.status === 'playing' ? 'playing' : 'ended'));
+                const statusText = r.status === 'waiting' ? 'Waiting' :
+                                 (r.status === 'playing' && allSubmitted ? 'Ready for Next Round' :
+                                 (r.status === 'playing' ? `Q${r.quarter}/${r.totalQuarters}` : 'Ended'));
+                
+                const playerTags = r.playerDetails?.map(p => 
+                    `<span class="player-tag ${p.submitted ? 'submitted' : 'pending'}" onclick="kickPlayer('${r.roomCode}', '${p.id}')" title="Click to kick">
+                        ${p.name} (${p.company})
+                    </span>`
+                ).join('') || '<span style="color: var(--text-muted)">No players</span>';
+                
+                const actions = r.status === 'waiting' ? 
+                    `<button class="btn btn-success" onclick="startGame('${r.roomCode}')">Start Game</button>` :
+                    (r.status === 'playing' ? 
+                        `<button class="btn btn-success" onclick="nextRound('${r.roomCode}')" ${!allSubmitted ? 'disabled' : ''}>
+                            ${allSubmitted ? 'Next Round ⏭' : 'Waiting for submissions'}
+                        </button>` : '');
+                
+                return `
+                    <div class="room-card">
+                        <div class="room-header">
+                            <span class="room-code">${r.roomCode} <span class="room-params">(${r.maxPlayers} players, ${r.totalQuarters} quarters, $${(r.startingCash/1000000).toFixed(1)}M)</span></span>
+                            <span class="status-badge ${statusClass}">${statusText}</span>
+                        </div>
+                        <div class="player-tags">${playerTags}</div>
+                        <div class="action-buttons">
+                            ${actions}
+                            <button class="btn btn-danger" onclick="deleteRoom('${r.roomCode}')">Delete</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderReports(history) {
+            const list = document.getElementById('reportsList');
+            document.getElementById('statHistory').textContent = history.length;
+            
+            if (!history.length) {
+                list.innerHTML = '<div class="empty">No games played yet</div>';
+                return;
+            }
+            
+            list.innerHTML = history.slice().reverse().map((h, i) => {
+                const totalRevenue = h.players.reduce((s, p) => s + (p.history?.reduce((s, h) => s + h.revenue, 0) || 0), 0);
+                const totalProfit = h.players.reduce((s, p) => s + (p.totalProfit || p.totalProfit === 0 ? p.totalProfit : (p.history?.reduce((s, hh) => s + hh.profit, 0) || 0)), 0);
+                const avgProfit = totalProfit / h.players.length;
+                
+                const playerStats = h.players.map(p => {
+                    const profit = p.history?.reduce((s, hh) => s + (hh.profit || 0), 0) || (p.totalProfit || 0);
+                    const avgShare = p.history?.length ? p.history.reduce((s, hh) => s + (hh.marketShare || 0), 0) / p.history.length : (p.avgShare || 0);
+                    return { ...p, profit, avgShare };
+                }).sort((a, b) => b.profit - a.profit);
+                
+                return `
+                    <div class="report-card">
+                <div class="report-header">
+                            <span class="report-winner">👑 Winner: ${h.winner} ${h.company ? `(${h.company})` : ''}</span>
+                            <div>
+                                <button class="btn btn-primary" onclick="exportPDF('${h.roomCode}')" style="padding: 5px 10px; font-size: 0.8rem;">📄 Full Report</button>
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 10px;">
+                            <strong>Players:</strong> ${playerStats.map((p, idx) => `<span style="margin-right: 10px;">${idx+1}. ${p.name} (${p.company})</span>`).join('')}
+                        </div>
+                <div style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 15px;">
+                            ${new Date(h.playedAt).toLocaleString()} | Room: ${h.roomCode} | ${h.quarters || 0} Quarters
+                        </div>
+                        <table style="font-size: 0.85rem; margin-bottom: 15px;">
+                            <thead>
+                                <tr><th>Rank</th><th>Player</th><th>Company</th><th>Final Cash</th><th>Total Profit</th><th>Avg Share</th><th>Action</th></tr>
+                            </thead>
+                            <tbody>
+                                ${playerStats.map((p, idx) => `
+                                    <tr>
+                                        <td>${idx === 0 ? '🥇' : idx === 1 ? '🥈' : idx === 2 ? '🥉' : idx + 1}</td>
+                                        <td>${p.name}</td>
+                                        <td>${p.company}</td>
+                                        <td>$${Math.round(p.finalCash).toLocaleString()}</td>
+                                        <td style="color: ${p.profit >= 0 ? 'var(--success)' : 'var(--danger)'}">$${Math.round(p.profit).toLocaleString()}</td>
+                                        <td>${p.avgShare.toFixed(1)}%</td>
+                                        <td><button class="btn btn-success" onclick="exportPlayerPDF('${h.roomCode}', '${p.name}')" style="padding: 3px 8px; font-size: 0.7rem;">📄 Individual</button></td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                        <div class="history-summary">
+                            <div class="summary-item">
+                                <div class="summary-label">Total Revenue</div>
+                                <div class="summary-value">$${Math.round(totalRevenue).toLocaleString()}</div>
+                            </div>
+                            <div class="summary-item">
+                                <div class="summary-label">Total Profit</div>
+                                <div class="summary-value">$${Math.round(totalProfit).toLocaleString()}</div>
+                            </div>
+                            <div class="summary-item">
+                                <div class="summary-label">Avg Profit</div>
+                                <div class="summary-value">$${Math.round(avgProfit).toLocaleString()}</div>
+                            </div>
+                            <div class="summary-item">
+                                <div class="summary-label">Quarters</div>
+                                <div class="summary-value">${h.quarters}</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            updateAnalytics(history);
+        }
+
+        function exportPlayerPDF(roomCode, playerName) {
+            const history = gameHistory.find(h => h.roomCode === roomCode);
+            if (!history) {
+                notify('Report not found', 'error');
+                return;
+            }
+
+                const player = history.players.find(p => p.name === playerName || p.name === decodeURIComponent(playerName));
+            if (!player) {
+                notify('Player not found', 'error');
+                return;
+            }
+
+            const doc = new jsPDF();
+            
+            // Title
+            doc.setFontSize(20);
+            doc.setTextColor(30, 60, 100);
+            doc.text('My BizSim Performance Report', 105, 20, { align: 'center' });
+            
+            doc.setFontSize(12);
+            doc.setTextColor(100);
+            doc.text(`Room: ${history.roomCode}`, 105, 30, { align: 'center' });
+            doc.text(`Date: ${new Date(history.playedAt).toLocaleString()}`, 105, 37, { align: 'center' });
+            
+            // Player Info
+            const isWinner = player.name === history.winner;
+            
+            doc.setFontSize(14);
+            doc.setTextColor(0);
+            doc.text(`Player: ${player.name}`, 20, 50);
+            doc.text(`Company: ${player.company}`, 20, 58);
+            
+            if (isWinner) {
+                doc.setFillColor(255, 215, 0);
+                doc.rect(80, 48, 50, 12, 'F');
+                doc.setFontSize(12);
+                doc.setTextColor(0);
+                doc.text('🏆 WINNER', 105, 56, { align: 'center' });
+            }
+            
+            // Summary
+            doc.setFontSize(12);
+            doc.setTextColor(0);
+            const totalProfit = player.history?.reduce((s, h) => s + h.profit, 0) || 0;
+            const totalRevenue = player.history?.reduce((s, h) => s + h.revenue, 0) || 0;
+            const avgShare = player.history?.length ? player.history.reduce((s, h) => s + h.marketShare, 0) / player.history.length : 0;
+            
+            const rank = history.players.map(p => ({
+                ...p,
+                profit: p.history?.reduce((s, hh) => s + (hh.profit || 0), 0) || (p.totalProfit || 0)
+            })).sort((a, b) => b.profit - a.profit).findIndex(p => p.name === player.name) + 1;
+
+            doc.text(`Final Cash: $${Math.round(player.finalCash).toLocaleString()}`, 20, 72);
+            doc.text(`Total Profit: $${Math.round(totalProfit).toLocaleString()}`, 20, 80);
+            doc.text(`Total Revenue: $${Math.round(totalRevenue).toLocaleString()}`, 20, 88);
+            doc.text(`Average Market Share: ${avgShare.toFixed(1)}%`, 20, 96);
+            doc.text(`Final Rank: #${rank}`, 20, 104);
+            
+            // Quarterly Table
+            if (player.history && player.history.length > 0) {
+                const qData = player.history.map(h => [
+                    `Q${h.quarter}`,
+                    formatMoney(h.revenue),
+                    formatMoney(h.profit),
+                    `${h.marketShare.toFixed(1)}%`
+                ]);
+                
+                doc.autoTable({
+                    startY: 115,
+                    head: [['Quarter', 'Revenue', 'Profit', 'Market Share']],
+                    body: qData,
+                    theme: 'grid',
+                    headStyles: { fillColor: [30, 60, 100] }
+                });
+            }
+            
+            // Decisions
+            doc.addPage();
+            doc.setFontSize(14);
+            doc.setTextColor(30, 60, 100);
+            doc.text('My Decisions Each Quarter', 20, 20);
+            
+            let yPos = 35;
+            player.history?.forEach((h, i) => {
+                if (h.decisions) {
+                    doc.setFontSize(10);
+                    doc.setTextColor(0);
+                    doc.text(`Quarter ${h.quarter}:`, 20, yPos);
+                    yPos += 7;
+                    doc.setFontSize(9);
+                    doc.setTextColor(100);
+                    doc.text(`Price: $${h.decisions.price} | Marketing: $${h.decisions.marketingBudget?.toLocaleString()} | Research: $${h.decisions.researchBudget?.toLocaleString()}`, 25, yPos);
+                    yPos += 6;
+                    doc.text(`Quality: $${h.decisions.qualityInvestment?.toLocaleString()} | Distribution: ${h.decisions.distribution} channels`, 25, yPos);
+                    yPos += 12;
+                }
+            });
+            
+            doc.save(`BizSim_${player.name}_Report_${roomCode}.pdf`);
+            notify('Individual report downloaded!', 'success');
+        }
+
+        // Export a full single-game report (per-game PDF)
+        function exportPDF(roomCode) {
+            const history = gameHistory.find(h => h.roomCode === roomCode);
+            if (!history) { notify('Report not found', 'error'); return; }
+
+            const doc = new jsPDF();
+            // Header
+            doc.setFontSize(18);
+            doc.setTextColor(30, 60, 100);
+            doc.text('BizSim - Game Report', 105, 20, { align: 'center' });
+            doc.setFontSize(11);
+            doc.setTextColor(100);
+            doc.text(`Room: ${history.roomCode}  •  Date: ${new Date(history.playedAt).toLocaleString()}`, 105, 28, { align: 'center' });
+            doc.setFontSize(12);
+            doc.setTextColor(30, 60, 100);
+            doc.text(`Winner: ${history.winner || '-'} ${history.company ? `(${history.company})` : ''}`, 14, 40);
+
+            // Players table
+            const players = (history.players || []).map((p, i) => {
+                const totalProfit = p.totalProfit != null ? p.totalProfit : (p.history ? p.history.reduce((s, hh) => s + (hh.profit || 0), 0) : 0);
+                const avgShare = p.avgShare != null ? p.avgShare : (p.history?.length ? p.history.reduce((s, hh) => s + (hh.marketShare || 0), 0) / p.history.length : 0);
+                return [i + 1, p.name || '-', p.company || '-', formatMoney(p.finalCash || p.finalCash === 0 ? p.finalCash : (p.finalCash || 0)), formatMoney(totalProfit), `${avgShare.toFixed(1)}%`];
+            });
+
+            doc.autoTable({
+                startY: 48,
+                head: [['#', 'Player', 'Company', 'Final Cash', 'Total Profit', 'Avg Share']],
+                body: players,
+                theme: 'grid',
+                headStyles: { fillColor: [30, 60, 100] }
+            });
+
+            // Per-player breakdown pages
+            history.players.forEach((p, idx) => {
+                doc.addPage();
+                doc.setFontSize(16);
+                doc.setTextColor(30, 60, 100);
+                doc.text(`${p.name} — ${p.company || ''}`, 14, 20);
+
+                const totalProfit = p.totalProfit != null ? p.totalProfit : (p.history ? p.history.reduce((s, hh) => s + (hh.profit || 0), 0) : 0);
+                const totalRevenue = p.history ? p.history.reduce((s, hh) => s + (hh.revenue || 0), 0) : 0;
+                const avgShare = p.avgShare != null ? p.avgShare : (p.history?.length ? p.history.reduce((s, hh) => s + (hh.marketShare || 0), 0) / p.history.length : 0);
+
+                doc.setFontSize(11);
+                doc.setTextColor(0);
+                doc.text(`Final Cash: ${formatMoney(p.finalCash || 0)}`, 14, 32);
+                doc.text(`Total Profit: ${formatMoney(totalProfit)}`, 14, 40);
+                doc.text(`Total Revenue: ${formatMoney(totalRevenue)}`, 14, 48);
+                doc.text(`Average Market Share: ${avgShare.toFixed(1)}%`, 14, 56);
+
+                if (p.history && p.history.length) {
+                    const qRows = p.history.map(hh => [`Q${hh.quarter}`, formatMoney(hh.revenue || 0), formatMoney(hh.profit || 0), `${(hh.marketShare || 0).toFixed(1)}%`]);
+                    doc.autoTable({
+                        startY: 68,
+                        head: [['Quarter', 'Revenue', 'Profit', 'Market Share']],
+                        body: qRows,
+                        theme: 'grid',
+                        headStyles: { fillColor: [30, 60, 100] }
+                    });
+                }
+            });
+
+            doc.save(`BizSim_GameReport_${roomCode}.pdf`);
+            notify('Game report downloaded!', 'success');
+        }
+
+        function exportAllGamesReport() {
+            if (gameHistory.length === 0) {
+                notify('No game history available', 'error');
+                return;
+            }
+
+            const doc = new jsPDF();
+            
+            // ============== PAGE 1: OVERVIEW ==============
+            doc.setFontSize(22);
+            doc.setTextColor(30, 60, 100);
+            doc.text('BizSim - All Games Report', 105, 20, { align: 'center' });
+            
+            doc.setFontSize(11);
+            doc.setTextColor(100);
+            doc.text(`Generated: ${new Date().toLocaleString()}`, 105, 30, { align: 'center' });
+            doc.text(`Total Games: ${gameHistory.length}`, 105, 38, { align: 'center' });
+            
+            // Aggregate Statistics
+            const totalPlayers = gameHistory.reduce((s, h) => s + h.players.length, 0);
+            const allProfits = gameHistory.flatMap(h => h.players.map(p => p.history?.reduce((s, h) => s + h.profit, 0) || 0));
+            const allRevenues = gameHistory.flatMap(h => h.players.map(p => p.history?.reduce((s, h) => s + h.revenue, 0) || 0));
+            const totalProfit = allProfits.reduce((s, p) => s + p, 0);
+            const totalRevenue = allRevenues.reduce((s, p) => s + p, 0);
+            const avgProfitPerGame = gameHistory.length ? totalProfit / gameHistory.length : 0;
+            const avgProfitPerPlayer = totalPlayers ? totalProfit / totalPlayers : 0;
+            
+            // Statistical measures
+            const profitMean = allProfits.length ? allProfits.reduce((s, p) => s + p, 0) / allProfits.length : 0;
+            const profitStdDev = allProfits.length ? Math.sqrt(allProfits.reduce((s, p) => s + Math.pow(p - profitMean, 2), 0) / allProfits.length) : 0;
+            const sortedProfits = [...allProfits].sort((a, b) => a - b);
+            const profitMedian = sortedProfits.length ? (sortedProfits[Math.floor(sortedProfits.length / 2)]) : 0;
+            const profitMin = allProfits.length ? Math.min(...allProfits) : 0;
+            const profitMax = allProfits.length ? Math.max(...allProfits) : 0;
+            
+            // Winner stats
+            const winnerCounts = {};
+            gameHistory.forEach(h => {
+                if (h.winner) winnerCounts[h.winner] = (winnerCounts[h.winner] || 0) + 1;
+            });
+            const topWinners = Object.entries(winnerCounts).sort((a, b) => b[1] - a[1]).slice(0, 5);
+            
+            doc.setFillColor(240, 245, 255);
+            doc.rect(14, 45, 180, 70, 'F');
+            
+            doc.setFontSize(13);
+            doc.setTextColor(30, 60, 100);
+            doc.text('Aggregate Statistics', 20, 55);
+            
+            doc.setFontSize(10);
+            doc.setTextColor(50);
+            const stats = [
+                [`Total Games Played: ${gameHistory.length}`, `Total Players: ${totalPlayers}`],
+                [`Total Revenue: ${formatMoney(totalRevenue)}`, `Total Profit: ${formatMoney(totalProfit)}`],
+                [`Avg Profit/Game: ${formatMoney(avgProfitPerGame)}`, `Avg Profit/Player: ${formatMoney(avgProfitPerPlayer)}`],
+                [`Profit Median: ${formatMoney(profitMedian)}`, `Profit Std Dev: ${formatMoney(profitStdDev)}`],
+                [`Highest Profit Ever: ${formatMoney(profitMax)}`, `Lowest Profit Ever: ${formatMoney(profitMin)}`]
+            ];
+            
+            let yPos = 63;
+            stats.forEach(row => {
+                doc.text(row[0], 20, yPos);
+                doc.text(row[1], 110, yPos);
+                yPos += 7;
+            });
+            
+            // Top Winners
+            doc.setFontSize(12);
+            doc.setTextColor(30, 60, 100);
+            doc.text('Top Winners', 14, 125);
+            
+            const winnerData = topWinners.map(([name, count], i) => [i + 1, name, count + ' wins']);
+            doc.autoTable({
+                startY: 130,
+                head: [['#', 'Player', 'Wins']],
+                body: winnerData,
+                theme: 'grid',
+                headStyles: { fillColor: [30, 60, 100] }
+            });
+            
+            // ============== PAGE 2: GAME-BY-GAME SUMMARY ==============
+            doc.addPage();
+            doc.setFontSize(16);
+            doc.setTextColor(30, 60, 100);
+            doc.text('All Games Summary', 14, 20);
+            
+                const gameSummaryData = gameHistory.slice().reverse().map((h, i) => {
+                const profits = h.players.map(p => p.history?.reduce((s, hh) => s + (hh.profit || 0), 0) || (p.totalProfit || 0));
+                const winnerProfit = profits.length ? Math.max(...profits) : 0;
+                return [
+                    i + 1,
+                    h.roomCode,
+                    h.players.length.toString(),
+                    h.winner,
+                    formatMoney(winnerProfit),
+                    h.quarters.toString(),
+                    new Date(h.playedAt).toLocaleDateString()
+                ];
+            });
+            
+            doc.autoTable({
+                startY: 25,
+                head: [['#', 'Room', 'Players', 'Winner', 'Winner Profit', 'Quarters', 'Date']],
+                body: gameSummaryData,
+                theme: 'striped',
+                headStyles: { fillColor: [30, 60, 100] },
+                styles: { fontSize: 8 }
+            });
+            
+            // ============== PAGE 3+: INDIVIDUAL GAME REPORTS ==============
+            gameHistory.slice().reverse().forEach((h, idx) => {
+                doc.addPage();
+                
+                // Compact header
+                doc.setFontSize(14);
+                doc.setTextColor(30, 60, 100);
+                doc.text(`Game #${idx + 1}: Room ${h.roomCode}`, 14, 18);
+                
+                doc.setFontSize(10);
+                doc.setTextColor(100);
+                doc.text(`Date: ${new Date(h.playedAt).toLocaleString()} | Players: ${h.players.length} | Quarters: ${h.quarters}`, 14, 25);
+                
+                // Winner highlight
+                doc.setFillColor(255, 215, 0);
+                doc.rect(14, 30, 60, 10, 'F');
+                doc.setFontSize(10);
+                doc.setTextColor(0);
+                doc.text(`Winner: ${h.winner}`, 44, 37, { align: 'center' });
+                
+                // Player rankings
+                const sorted = [...h.players].map(p => ({
+                    ...p,
+                    profit: p.history?.reduce((s, hh) => s + hh.profit, 0) || 0,
+                    avgShare: p.history?.length ? p.history.reduce((s, hh) => s + hh.marketShare, 0) / p.history.length : 0
+                })).sort((a, b) => b.profit - a.profit);
+                
+                const playerData = sorted.map((p, i) => [
+                    i + 1,
+                    p.name,
+                    p.company,
+                    formatMoney(p.profit),
+                    `${p.avgShare.toFixed(1)}%`
+                ]);
+                
+                doc.autoTable({
+                    startY: 45,
+                    head: [['Rank', 'Player', 'Company', 'Profit', 'Avg Share']],
+                    body: playerData,
+                    theme: 'grid',
+                    headStyles: { fillColor: [30, 60, 100] },
+                    styles: { fontSize: 9 }
+                });
+                
+                // Quarterly table for each player (condensed)
+                if (h.players.length <= 4) {
+                    doc.setFontSize(10);
+                    doc.setTextColor(30, 60, 100);
+                    doc.text('Quarterly Breakdown', 14, doc.lastAutoTable.finalY + 10);
+                    
+                    const allQ = [];
+                    for (let q = 1; q <= h.quarters; q++) {
+                        const row = [(`Q${q}`)];
+                        sorted.forEach(p => {
+                            const qh = p.history?.find(hh => hh.quarter === q);
+                            row.push(formatMoney(qh?.profit || 0));
+                        });
+                        allQ.push(row);
+                    }
+                    
+                    const head = ['Quarter', ...sorted.map(p => p.name.substring(0, 8))];
+                    doc.autoTable({
+                        startY: doc.lastAutoTable.finalY + 15,
+                        head: [head],
+                        body: allQ,
+                        theme: 'grid',
+                        styles: { fontSize: 8 }
+                    });
+                }
+            });
+            
+            doc.save(`BizSim_AllGames_Report_${new Date().toISOString().split('T')[0]}.pdf`);
+            notify('All games report downloaded!', 'success');
+        }
+
+        function updateAnalytics(history) {
+            const totalGames = history.length;
+            const totalPlayers = history.reduce((s, h) => s + h.players.length, 0);
+            const avgWin = history.length ? 
+                Math.round(history.reduce((s, h) => {
+                    const winnerName = h.winner;
+                    const winner = h.players.find(p => p.name === winnerName) || h.players[0];
+                    const wp = winner ? (winner.totalProfit != null ? winner.totalProfit : (winner.history ? winner.history.reduce((ss, hh) => ss + (hh.profit || 0), 0) : 0)) : 0;
+                    return s + wp;
+                }, 0) / history.length) : 0;
+            
+            const winnerCounts = {};
+            history.forEach(h => {
+                winnerCounts[h.winner] = (winnerCounts[h.winner] || 0) + 1;
+            });
+            const topWinner = Object.entries(winnerCounts).sort((a, b) => b[1] - a[1])[0]?.[0] || '-';
+            
+            document.getElementById('analyticsTotal').textContent = totalGames;
+            document.getElementById('analyticsPlayers').textContent = totalPlayers;
+            document.getElementById('analyticsAvgWin').textContent = '$' + avgWin.toLocaleString();
+            document.getElementById('analyticsTopWinner').textContent = topWinner;
+        }
+
+        // Initial load
+        fetch('/api/admin/history').then(r => r.json()).then(h => {
+            gameHistory = h;
+            renderReports(h);
+        });
+        fetch('/api/admin/rooms').then(r => r.json()).then((rooms) => {
+            renderRooms(rooms);
+            updateStats(rooms);
+        });
+
+        socket.on('connect', () => console.log('Admin connected'));
+    </script>
+</body>
+</html>
