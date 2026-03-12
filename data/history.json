@@ -1,0 +1,657 @@
+[
+  {
+    "roomCode": "H4NTDA",
+    "winner": "bot",
+    "company": "bot pvt ltd",
+    "players": [
+      {
+        "name": "jose",
+        "company": "jose pvt ltd",
+        "finalCash": 8635835.94862289,
+        "totalProfit": 7635835.94862289,
+        "avgShare": 48.4784265038474,
+        "history": [
+          {
+            "quarter": 1,
+            "revenue": 1208029.2130151957,
+            "profit": 1083029.2130151957,
+            "marketShare": 68.65671641791045,
+            "decisions": {
+              "price": 50,
+              "marketingBudget": 50000,
+              "researchBudget": 25000,
+              "qualityInvestment": 30000,
+              "distribution": 1
+            }
+          },
+          {
+            "quarter": 2,
+            "revenue": 2592924.9387765178,
+            "profit": 2257924.9387765178,
+            "marketShare": 35.89009730967373,
+            "decisions": {
+              "price": 50,
+              "marketingBudget": 65000,
+              "researchBudget": 85000,
+              "qualityInvestment": 85000,
+              "distribution": 5
+            }
+          },
+          {
+            "quarter": 3,
+            "revenue": 2324422.0316133797,
+            "profit": 2034422.0316133797,
+            "marketShare": 52.89335956349059,
+            "decisions": {
+              "price": 50,
+              "marketingBudget": 90000,
+              "researchBudget": 60000,
+              "qualityInvestment": 40000,
+              "distribution": 5
+            }
+          },
+          {
+            "quarter": 4,
+            "revenue": 2585459.7652177974,
+            "profit": 2260459.7652177974,
+            "marketShare": 36.473532724314865,
+            "decisions": {
+              "price": 98,
+              "marketingBudget": 90000,
+              "researchBudget": 60000,
+              "qualityInvestment": 95000,
+              "distribution": 4
+            }
+          }
+        ]
+      },
+      {
+        "name": "bot",
+        "company": "bot pvt ltd",
+        "finalCash": 10499066.429915965,
+        "totalProfit": 9499066.429915965,
+        "avgShare": 51.5215734961526,
+        "history": [
+          {
+            "quarter": 1,
+            "revenue": 1566236.136178832,
+            "profit": 1321236.136178832,
+            "marketShare": 31.343283582089555,
+            "decisions": {
+              "price": 142,
+              "marketingBudget": 50000,
+              "researchBudget": 25000,
+              "qualityInvestment": 150000,
+              "distribution": 1
+            }
+          },
+          {
+            "quarter": 2,
+            "revenue": 2779020.030076268,
+            "profit": 2329020.030076268,
+            "marketShare": 64.10990269032627,
+            "decisions": {
+              "price": 30,
+              "marketingBudget": 100000,
+              "researchBudget": 100000,
+              "qualityInvestment": 150000,
+              "distribution": 5
+            }
+          },
+          {
+            "quarter": 3,
+            "revenue": 3146585.6003419096,
+            "profit": 2761585.6003419096,
+            "marketShare": 47.106640436509416,
+            "decisions": {
+              "price": 76,
+              "marketingBudget": 145000,
+              "researchBudget": 100000,
+              "qualityInvestment": 80000,
+              "distribution": 3
+            }
+          },
+          {
+            "quarter": 4,
+            "revenue": 3492224.6633189544,
+            "profit": 3087224.6633189544,
+            "marketShare": 63.52646727568515,
+            "decisions": {
+              "price": 76,
+              "marketingBudget": 145000,
+              "researchBudget": 100000,
+              "qualityInvestment": 80000,
+              "distribution": 4
+            }
+          }
+        ]
+      }
+    ],
+    "quarters": 4,
+    "playedAt": "2026-03-07T16:11:48.337Z"
+  },
+  {
+    "roomCode": "MHSABU",
+    "winner": "jose",
+    "company": "jose pvt ltd",
+    "players": [
+      {
+        "name": "jose",
+        "company": "jose pvt ltd",
+        "finalCash": 3399714.755531627,
+        "totalProfit": 3398714.755531627,
+        "avgShare": 23.991677556879495,
+        "history": [
+          {
+            "quarter": 1,
+            "revenue": 928965.3784874949,
+            "profit": 803965.3784874949,
+            "marketShare": 20.689655172413794,
+            "decisions": {
+              "price": 144,
+              "marketingBudget": 50000,
+              "researchBudget": 25000,
+              "qualityInvestment": 30000,
+              "distribution": 1
+            }
+          },
+          {
+            "quarter": 2,
+            "revenue": 1065877.7647124482,
+            "profit": 900877.7647124482,
+            "marketShare": 26.04501607717042,
+            "decisions": {
+              "price": 144,
+              "marketingBudget": 50000,
+              "researchBudget": 25000,
+              "qualityInvestment": 70000,
+              "distribution": 1
+            }
+          },
+          {
+            "quarter": 3,
+            "revenue": 1038734.1011797371,
+            "profit": 873734.1011797371,
+            "marketShare": 26.04501607717042,
+            "decisions": {
+              "price": 144,
+              "marketingBudget": 50000,
+              "researchBudget": 25000,
+              "qualityInvestment": 70000,
+              "distribution": 1
+            }
+          },
+          {
+            "quarter": 4,
+            "revenue": 985137.5111519471,
+            "profit": 820137.5111519471,
+            "marketShare": 23.18702290076336,
+            "decisions": {
+              "price": 144,
+              "marketingBudget": 50000,
+              "researchBudget": 25000,
+              "qualityInvestment": 70000,
+              "distribution": 1
+            }
+          }
+        ]
+      },
+      {
+        "name": "bot",
+        "company": "bot pvt ltd",
+        "finalCash": 2682260.2792107034,
+        "totalProfit": 2681260.2792107034,
+        "avgShare": 76.0083224431205,
+        "history": [
+          {
+            "quarter": 1,
+            "revenue": 865529.0852805943,
+            "profit": 740529.0852805943,
+            "marketShare": 79.3103448275862,
+            "decisions": {
+              "price": 35,
+              "marketingBudget": 50000,
+              "researchBudget": 25000,
+              "qualityInvestment": 30000,
+              "distribution": 1
+            }
+          },
+          {
+            "quarter": 2,
+            "revenue": 735623.8002344999,
+            "profit": 640623.8002344999,
+            "marketShare": 73.95498392282957,
+            "decisions": {
+              "price": 35,
+              "marketingBudget": 50000,
+              "researchBudget": 25000,
+              "qualityInvestment": 0,
+              "distribution": 1
+            }
+          },
+          {
+            "quarter": 3,
+            "revenue": 716890.3904746985,
+            "profit": 621890.3904746985,
+            "marketShare": 73.95498392282958,
+            "decisions": {
+              "price": 35,
+              "marketingBudget": 50000,
+              "researchBudget": 25000,
+              "qualityInvestment": 0,
+              "distribution": 1
+            }
+          },
+          {
+            "quarter": 4,
+            "revenue": 793217.0032209107,
+            "profit": 678217.0032209107,
+            "marketShare": 76.81297709923665,
+            "decisions": {
+              "price": 35,
+              "marketingBudget": 50000,
+              "researchBudget": 25000,
+              "qualityInvestment": 0,
+              "distribution": 2
+            }
+          }
+        ]
+      }
+    ],
+    "quarters": 4,
+    "playedAt": "2026-03-07T16:27:10.281Z"
+  },
+  {
+    "roomCode": "AMWKRH",
+    "winner": "BOT",
+    "company": "BOT PVT LTD",
+    "players": [
+      {
+        "name": "JOSE",
+        "company": "JOSE PVT LTD",
+        "finalCash": 7316353.297284238,
+        "totalProfit": 6316353.297284238,
+        "avgShare": 48.33333333333333,
+        "history": [
+          {
+            "quarter": 1,
+            "revenue": 1433482.0272140244,
+            "profit": 1308482.0272140244,
+            "marketShare": 50,
+            "decisions": {
+              "price": 50,
+              "marketingBudget": 50000,
+              "researchBudget": 25000,
+              "qualityInvestment": 30000,
+              "distribution": 1
+            }
+          },
+          {
+            "quarter": 2,
+            "revenue": 1659745.42731525,
+            "profit": 1514745.42731525,
+            "marketShare": 46.666666666666664,
+            "decisions": {
+              "price": 50,
+              "marketingBudget": 50000,
+              "researchBudget": 25000,
+              "qualityInvestment": 30000,
+              "distribution": 2
+            }
+          },
+          {
+            "quarter": 3,
+            "revenue": 1647372.9274153481,
+            "profit": 1502372.9274153481,
+            "marketShare": 46.666666666666664,
+            "decisions": {
+              "price": 50,
+              "marketingBudget": 50000,
+              "researchBudget": 25000,
+              "qualityInvestment": 30000,
+              "distribution": 2
+            }
+          },
+          {
+            "quarter": 4,
+            "revenue": 2195752.9153396147,
+            "profit": 1990752.9153396147,
+            "marketShare": 50,
+            "decisions": {
+              "price": 50,
+              "marketingBudget": 50000,
+              "researchBudget": 25000,
+              "qualityInvestment": 30000,
+              "distribution": 5
+            }
+          }
+        ]
+      },
+      {
+        "name": "BOT",
+        "company": "BOT PVT LTD",
+        "finalCash": 7488798.776531465,
+        "totalProfit": 6488798.776531465,
+        "avgShare": 51.66666666666667,
+        "history": [
+          {
+            "quarter": 1,
+            "revenue": 1433482.0272140244,
+            "profit": 1243482.0272140244,
+            "marketShare": 50,
+            "decisions": {
+              "price": 50,
+              "marketingBudget": 50000,
+              "researchBudget": 90000,
+              "qualityInvestment": 30000,
+              "distribution": 1
+            }
+          },
+          {
+            "quarter": 2,
+            "revenue": 1896851.9169317144,
+            "profit": 1666851.9169317144,
+            "marketShare": 53.333333333333336,
+            "decisions": {
+              "price": 50,
+              "marketingBudget": 50000,
+              "researchBudget": 90000,
+              "qualityInvestment": 30000,
+              "distribution": 3
+            }
+          },
+          {
+            "quarter": 3,
+            "revenue": 1882711.9170461122,
+            "profit": 1652711.9170461122,
+            "marketShare": 53.333333333333336,
+            "decisions": {
+              "price": 50,
+              "marketingBudget": 50000,
+              "researchBudget": 90000,
+              "qualityInvestment": 30000,
+              "distribution": 3
+            }
+          },
+          {
+            "quarter": 4,
+            "revenue": 2195752.9153396147,
+            "profit": 1925752.9153396147,
+            "marketShare": 50,
+            "decisions": {
+              "price": 50,
+              "marketingBudget": 50000,
+              "researchBudget": 90000,
+              "qualityInvestment": 30000,
+              "distribution": 5
+            }
+          }
+        ]
+      }
+    ],
+    "quarters": 4,
+    "playedAt": "2026-03-07T17:23:30.585Z"
+  },
+  {
+    "roomCode": "GMCOS5",
+    "winner": "JOSE",
+    "company": "JOSE PVT LTD",
+    "players": [
+      {
+        "name": "JOSE",
+        "company": "JOSE PVT LTD",
+        "finalCash": 12058319.36589415,
+        "totalProfit": 11058319.36589415,
+        "avgShare": 50.954732161175414,
+        "history": [
+          {
+            "quarter": 1,
+            "revenue": 3161886.4190260074,
+            "profit": 2896886.4190260074,
+            "marketShare": 61.496610027622,
+            "decisions": {
+              "price": 71,
+              "marketingBudget": 50000,
+              "researchBudget": 25000,
+              "qualityInvestment": 110000,
+              "distribution": 4
+            }
+          },
+          {
+            "quarter": 2,
+            "revenue": 3112876.9005326265,
+            "profit": 2847876.9005326265,
+            "marketShare": 54.50161964343116,
+            "decisions": {
+              "price": 71,
+              "marketingBudget": 50000,
+              "researchBudget": 25000,
+              "qualityInvestment": 110000,
+              "distribution": 4
+            }
+          },
+          {
+            "quarter": 3,
+            "revenue": 3482066.9940619483,
+            "profit": 3177066.9940619483,
+            "marketShare": 46.33071647997021,
+            "decisions": {
+              "price": 71,
+              "marketingBudget": 50000,
+              "researchBudget": 25000,
+              "qualityInvestment": 150000,
+              "distribution": 4
+            }
+          },
+          {
+            "quarter": 4,
+            "revenue": 2341489.0522735673,
+            "profit": 2136489.0522735673,
+            "marketShare": 41.489982493678276,
+            "decisions": {
+              "price": 71,
+              "marketingBudget": 50000,
+              "researchBudget": 25000,
+              "qualityInvestment": 50000,
+              "distribution": 4
+            }
+          }
+        ]
+      },
+      {
+        "name": "BOT",
+        "company": "BOT 1 PVT LTD",
+        "finalCash": 8570109.373985915,
+        "totalProfit": 7570109.3739859145,
+        "avgShare": 49.045267838824586,
+        "history": [
+          {
+            "quarter": 1,
+            "revenue": 1394137.8322012844,
+            "profit": 1269137.8322012844,
+            "marketShare": 38.503389972377995,
+            "decisions": {
+              "price": 50,
+              "marketingBudget": 50000,
+              "researchBudget": 25000,
+              "qualityInvestment": 30000,
+              "distribution": 1
+            }
+          },
+          {
+            "quarter": 2,
+            "revenue": 1830038.0970483408,
+            "profit": 1665038.0970483408,
+            "marketShare": 45.49838035656882,
+            "decisions": {
+              "price": 50,
+              "marketingBudget": 50000,
+              "researchBudget": 25000,
+              "qualityInvestment": 30000,
+              "distribution": 3
+            }
+          },
+          {
+            "quarter": 3,
+            "revenue": 2840570.414012224,
+            "profit": 2560570.414012224,
+            "marketShare": 53.669283520029786,
+            "decisions": {
+              "price": 50,
+              "marketingBudget": 135000,
+              "researchBudget": 55000,
+              "qualityInvestment": 30000,
+              "distribution": 3
+            }
+          },
+          {
+            "quarter": 4,
+            "revenue": 2325363.0307240654,
+            "profit": 2075363.0307240654,
+            "marketShare": 58.51001750632173,
+            "decisions": {
+              "price": 50,
+              "marketingBudget": 135000,
+              "researchBudget": 55000,
+              "qualityInvestment": 0,
+              "distribution": 3
+            }
+          }
+        ]
+      }
+    ],
+    "quarters": 4,
+    "playedAt": "2026-03-07T17:54:57.704Z"
+  },
+  {
+    "roomCode": "1XUGM4",
+    "winner": "JACKSON",
+    "company": "JACKSON PVT LTD",
+    "players": [
+      {
+        "name": "BOT",
+        "company": "BOT PVT LTD",
+        "finalCash": 5688948.48696588,
+        "totalProfit": 4688948.48696588,
+        "avgShare": 63.561761409561434,
+        "history": [
+          {
+            "quarter": 1,
+            "revenue": 1214632.3008453094,
+            "profit": 1089632.3008453094,
+            "marketShare": 53.85982395383145,
+            "decisions": {
+              "price": 50,
+              "marketingBudget": 50000,
+              "researchBudget": 25000,
+              "qualityInvestment": 30000,
+              "distribution": 1
+            }
+          },
+          {
+            "quarter": 2,
+            "revenue": 1281228.3741562974,
+            "profit": 1156228.3741562974,
+            "marketShare": 66.79574056147143,
+            "decisions": {
+              "price": 50,
+              "marketingBudget": 50000,
+              "researchBudget": 25000,
+              "qualityInvestment": 30000,
+              "distribution": 1
+            }
+          },
+          {
+            "quarter": 3,
+            "revenue": 1338736.4126787814,
+            "profit": 1213736.4126787814,
+            "marketShare": 66.79574056147143,
+            "decisions": {
+              "price": 50,
+              "marketingBudget": 50000,
+              "researchBudget": 25000,
+              "qualityInvestment": 30000,
+              "distribution": 1
+            }
+          },
+          {
+            "quarter": 4,
+            "revenue": 1354351.399285492,
+            "profit": 1229351.399285492,
+            "marketShare": 66.79574056147143,
+            "decisions": {
+              "price": 50,
+              "marketingBudget": 50000,
+              "researchBudget": 25000,
+              "qualityInvestment": 30000,
+              "distribution": 1
+            }
+          }
+        ]
+      },
+      {
+        "name": "JACKSON",
+        "company": "JACKSON PVT LTD",
+        "finalCash": 6889387.647139891,
+        "totalProfit": 5889387.647139891,
+        "avgShare": 36.43823859043856,
+        "history": [
+          {
+            "quarter": 1,
+            "revenue": 1519189.6733823738,
+            "profit": 1384189.6733823738,
+            "marketShare": 46.140176046168534,
+            "decisions": {
+              "price": 73,
+              "marketingBudget": 40000,
+              "researchBudget": 20000,
+              "qualityInvestment": 35000,
+              "distribution": 2
+            }
+          },
+          {
+            "quarter": 2,
+            "revenue": 1694155.2811778593,
+            "profit": 1444155.2811778593,
+            "marketShare": 33.20425943852856,
+            "decisions": {
+              "price": 133,
+              "marketingBudget": 40000,
+              "researchBudget": 20000,
+              "qualityInvestment": 150000,
+              "distribution": 2
+            }
+          },
+          {
+            "quarter": 3,
+            "revenue": 1770197.577101256,
+            "profit": 1520197.577101256,
+            "marketShare": 33.20425943852856,
+            "decisions": {
+              "price": 133,
+              "marketingBudget": 40000,
+              "researchBudget": 20000,
+              "qualityInvestment": 150000,
+              "distribution": 2
+            }
+          },
+          {
+            "quarter": 4,
+            "revenue": 1790845.1154784018,
+            "profit": 1540845.1154784018,
+            "marketShare": 33.20425943852856,
+            "decisions": {
+              "price": 133,
+              "marketingBudget": 40000,
+              "researchBudget": 20000,
+              "qualityInvestment": 150000,
+              "distribution": 2
+            }
+          }
+        ]
+      }
+    ],
+    "quarters": 4,
+    "playedAt": "2026-03-09T04:13:33.084Z"
+  }
+]

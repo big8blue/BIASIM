@@ -1,0 +1,41 @@
+[
+  [
+    "8RKFT8",
+    {
+      "id": "8RKFT8",
+      "roomCode": "8RKFT8",
+      "status": "playing",
+      "quarter": 1,
+      "maxPlayers": 10,
+      "totalQuarters": 4,
+      "startingCash": 1000000,
+      "players": [
+        {
+          "id": "kTWZYf0CoQjnPpNuAAAB",
+          "name": "JACKSON",
+          "companyName": "JACKSON PVT LTD",
+          "cash": 1000000,
+          "revenue": 0,
+          "profit": 0,
+          "marketShare": 0,
+          "submitted": false,
+          "decisions": {
+            "price": 50,
+            "marketingBudget": 50000,
+            "researchBudget": 25000,
+            "qualityInvestment": 30000,
+            "distribution": 1
+          },
+          "history": []
+        }
+      ],
+      "marketConditions": {
+        "baseDemand": 13182.262368704289,
+        "competition": 3,
+        "economicFactor": 0.9025450617055593,
+        "trend": 1
+      },
+      "createdAt": "2026-03-10T05:19:09.261Z"
+    }
+  ]
+]
